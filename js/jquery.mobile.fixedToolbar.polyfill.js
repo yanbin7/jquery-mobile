@@ -1,6 +1,6 @@
 //>>excludeStart("jqmBuildExclude", pragmas.jqmBuildExclude);
 //>>description: Polyfilled behavior for "fixed" headers and footers in browsers that don't support position:fixed
-//>>label: Fixedtoolbar
+//>>label: Fixedtoolbarpolyfill
 
 define( [ "jquery", "./jquery.mobile.fixedToolbar" ], function( $ ) {
 //>>excludeEnd("jqmBuildExclude");
