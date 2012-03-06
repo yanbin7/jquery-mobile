@@ -1,0 +1,11 @@
+/* fixed page header & footer configuration */
+.ui-faux-fixed .ui-header-fixed,
+.ui-faux-fixed .ui-footer-fixed {
+	position: absolute;
+}
+.ui-header-fixed.ui-fixed-hidden {
+	top: 0 !important;
+}
+.ui-footer-fixed.ui-fixed-hidden {
+	bottom: 0 !important;
+}
