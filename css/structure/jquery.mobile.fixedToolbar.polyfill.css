@@ -1,11 +1,11 @@
 /* fixed page header & footer configuration */
-.ui-faux-fixed .ui-header-fixed,
-.ui-faux-fixed .ui-footer-fixed {
+.ui-fixed-faux.ui-header-fixed,
+.ui-fixed-faux.ui-footer-fixed {
 	position: absolute;
 }
-.ui-header-fixed.ui-fixed-hidden {
+.ui-header-fixed.ui-fixed-hidden.ui-fixed-faux {
 	top: 0 !important;
 }
-.ui-footer-fixed.ui-fixed-hidden {
+.ui-footer-fixed.ui-fixed-hidden.ui-fixed-faux {
 	bottom: 0 !important;
 }
