@@ -1,89 +1,88 @@
-//>>excludeStart("jqmBuildExclude", pragmas.jqmBuildExclude);
-//>>description: Polyfilled behavior for "fixed" headers and footers in browsers that don't support position:fixed
-//>>label: Fixedtoolbarpolyfill
-
-define( [ "jquery", "./jquery.mobile.fixedToolbar" ], function( $ ) {
-//>>excludeEnd("jqmBuildExclude");
+/*!
+ jQuery Mobile fixedtoolbar polyfill for blacklisted browsers that don't natively support position:fixed
+ Author @scottjehl
+ Copyright 2012 Filament Group, Inc.
+ License Dual MIT or GPLv2
+*/
 (function( $, undefined ) {
-	
-	// Add option tot he fixedtoolbar plugin for polyfilling fixed support in blacklist browsers
-	// Default to true when this file is included	
-	$.mobile.fixedtoolbar.prototype.options.polyfillSupport = true;
-	
-	var blacklistedBrowser = $.mobile.fixedtoolbar.prototype.options.supportBlacklist();
-	
-	// On mobileinit, check if the polyfill option is still enabled, and if the browser is blacklisted. 
-	// If so, override the blacklist function to return false
-	$( document ).bind( "mobileinit", function() {		
-		if( $.mobile.fixedtoolbar.prototype.options.polyfillSupport && blacklistedBrowser ){
-			// Make the blacklist test return false, letting any normally-blacklisted browsers in to be polyfilled
-			$.mobile.fixedtoolbar.prototype.options.supportBlacklist = function(){
-				return false;
-			};
-		}
-	});
-	
-	// If the browser is blacklisted, apply polyfill
-	if( blacklistedBrowser ){
-	
-		// Add this behavior on top of the fixedtoolbar plugin, at creation time
-		$( document ).delegate( $.mobile.fixedtoolbar.prototype.options.initSelector, "fixedtoolbarcreate", function() {
 
-			var toolbar = $( this ),
-				tbType = toolbar.hasClass( "ui-header-fixed") ? "header" : "footer",
-				page = toolbar.closest( ":jqmData(role='page')" );
+	// If the supportBlacklist is returning true, it's a blacklisted browser. 
+	if( $.mobile.fixedtoolbar.prototype.options.supportBlacklist() ){
 		
-			// If the polyfill option is disabled, or the browser is not blacklisted, return here
-			if ( !toolbar.data( "fixedtoolbar" ).options.polyfillSupport ) {
-				return;
-			}
+		// Keep a reference to the original _create method
+		var oldcreate = $.mobile.fixedtoolbar.prototype._create,
 		
-			// Add faux support class to toolbar
-			toolbar.addClass( "ui-fixed-faux" );
+			// Additional scripting to add to the _create method for polyfilling unsupported browsers
+			createPolyfill = function(){
+				
+				if( this.options.polyfillSupport === true ){
+				
+					var toolbar = this.element,
+						tbType = toolbar.hasClass( "ui-header-fixed") ? "header" : "footer",
+						page = toolbar.closest( ":jqmData(role='page')" );
+
+						// Add faux support class to toolbar
+						toolbar.addClass( "ui-fixed-faux" );
 		
-			// set up a function that resets the top or bottom value, depending on toolbar type
-			var resetPos = (function(){
-				if( tbType === "header" ){
-					return function(){
-						toolbar.css( "top", $( window ).scrollTop() + "px" );
-					};	
-				}
-				else {
-					return function(){
-						toolbar.css( "bottom", $.mobile.activePage.height() - $( window).scrollTop() - $.mobile.getScreenHeight() + "px" );
-					}
-				}
-			})();
+						// set up a function that resets the top or bottom value, depending on toolbar type
+						var resetPos = (function(){
+							if( tbType === "header" ){
+								return function(){
+									toolbar.css( "top", $( window ).scrollTop() + "px" );
+								};	
+							}
+							else {
+								return function(){
+									toolbar.css( "bottom", $.mobile.activePage.height() - $( window).scrollTop() - $.mobile.getScreenHeight() + "px" );
+								}
+							}
+						})();
 		
-			// Per page show, re-set up the event handling
-			page.bind( "pagebeforeshow", function( e ){
-				var visible;
+						// Per page show, re-set up the event handling
+						page.bind( "pagebeforeshow", function( e ){
+							var visible;
 						
-				// Normalize proper object for scroll event
-				( ( $( document ).scrollTop() === 0 ) ? $( window ) : $( document ) )
-					.bind( "scrollstart.fixedtoolbarpolyfill", function(){
-						visible = toolbar.not( ".ui-fixed-hidden" ).fixedtoolbar( "hide", true );
-					})
-					.bind( "scrollstop.fixedtoolbarpolyfill", function(){
-						resetPos();
-						visible.fixedtoolbar( "show" );
+							// Normalize proper object for scroll event
+							( ( $( document ).scrollTop() === 0 ) ? $( window ) : $( document ) )
+								.bind( "scrollstart.fixedtoolbarpolyfill", function(){
+									visible = toolbar.not( ".ui-fixed-hidden" ).fixedtoolbar( "hide", true );
+								})
+								.bind( "scrollstop.fixedtoolbarpolyfill", function(){
+									resetPos();
+									visible.fixedtoolbar( "show" );
+								});
+						
+							// on resize, reset positioning
+							$( window ).bind( "throttledresize.fixedtoolbarpolyfill", resetPos );
+
+							// on pagehide, unbind the event handlers
+							page.one( "pagehide", function(){
+								$( this ).add( this ).add( document ).unbind( ".fixedtoolbarpolyfill" );
+							});
+						
+							// align for pageshow
+							resetPos();
 					});
-						
-				// on resize, reset positioning
-				$( window ).bind( "throttledresize.fixedtoolbarpolyfill", resetPos );
-
-				// on pagehide, unbind the event handlers
-				page.one( "pagehide", function(){
-					$( this ).add( this ).add( document ).unbind( ".fixedtoolbarpolyfill" );
-				});
-						
-				// align for pageshow
-				resetPos();
-			});
-		});
+				}
+			};
+		
+		// Set the blacklist test return false, letting any normally-blacklisted browsers in to be polyfilled
+		$.mobile.fixedtoolbar.prototype.options.supportBlacklist = function(){
+			return false;
+		};
+		
+		// Define a new option for polyfillSupport, which can be disabled per call or via data attr data-polyfill-support
+		$.mobile.fixedtoolbar.prototype.options.polyfillSupport = true;
+		
+		// Overwrite the _create method with the old and the new
+		$.mobile.fixedtoolbar.prototype._create = function(){
+			
+			// Call the old _create method.
+			oldcreate.call( this );
+			
+			// Call the polyfill scripting
+			createPolyfill.call( this );
+		};
 	}
-
+	
 })( jQuery );
-//>>excludeStart("jqmBuildExclude", pragmas.jqmBuildExclude);
-});
-//>>excludeEnd("jqmBuildExclude");
