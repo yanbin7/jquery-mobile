@@ -54,6 +54,7 @@ $files = array(
 	'widgets/popup.js',
 	'jquery.mobile.zoom.js',
 	'jquery.mobile.zoom.iosorientationfix.js',
+	'widgets/tabs.js',
 	'jquery.mobile.init.js'
 );
 
