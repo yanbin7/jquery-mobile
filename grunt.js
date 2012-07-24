@@ -164,7 +164,16 @@ module.exports = function( grunt ) {
 				gitShortSha: 'git log -1 --format=format:"%H"'
 			},
 
-			shas: {}
+			shas: {},
+
+			plugins: {
+				template: "build/tasks/plugin.json.ejs",
+				output: "dist/",
+				globs: [
+					"./js/jquery.mobile.*.js",
+					"./js/*/**/*.js"
+				]
+			}
 		}
 	});
 
