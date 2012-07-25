@@ -168,11 +168,15 @@ module.exports = function( grunt ) {
 
 			plugins: {
 				template: "build/tasks/plugin.json.ejs",
-				output: "dist/",
+
 				globs: [
-					"./js/jquery.mobile.*.js",
-					"./js/*/**/*.js"
-				]
+					"./js/widgets/**/*.js",
+					"./js/events/**/*.js",
+					"./js/*.buttonMarkup.js",
+					"./js/*.vmouse.js"
+				],
+
+				exclude: /docs|define|autodividers|listview\.filter/
 			}
 		}
 	});

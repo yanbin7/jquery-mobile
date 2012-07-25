@@ -5,43 +5,56 @@ var requirejs = require( 'requirejs' ),
 
 module.exports = function( grunt ) {
   grunt.registerTask( "plugins", function() {
-		var global_config = grunt.config.get( 'global' ),
-			done = this.async(),
-		output = global_config.plugins.output;
+		var globalConfig = pluginConfig = grunt.config.get( 'global' ),
+			pluginConfig = globalConfig.plugins,
+			done = this.async(), filenameToPlugin;
+
+		filenameToPlugin = function( filename ) {
+			var pathless = filename.replace( /js\//, "" ),
+				newFilename, template;
+
+			// if the file is one of the old convention top level
+			// just strip the js dir, otherwise use the directory
+			// names for namespaces
+			if( /jquery\.mobile/.test( filename )){
+				newFilename = pathless;
+			} else {
+				newFilename = pathless.split("/").join(".");
+			}
+
+			return "mobile." + newFilename
+				.replace( "jquery.mobile.", "" )
+				.replace( ".js", ".jquery.json" );
+		};
 
 		requirejs.tools.useLib( function ( require ) {
 			require( [ 'parse' ], function ( parse ) {
 				// grab all the files that still use the original convention
 				var files = [], distFiles;
 
-				global_config.plugins.globs.forEach(function( globstr ) {
+				pluginConfig.globs.forEach(function( globstr ) {
 					// glob glob glob ... namespace fail
 					files = files.concat( glob.glob( globstr ) );
 				});
 
 				files.forEach( function( filename, i ) {
-					var data = fs.readFileSync( filename, 'utf8' ),
-						tree = parse.findDependencies( filename, data ),
-						pathless = filename.replace( /js\//, "" ),
-						newFilename, manifest, template;
-
-					// TODO splitting this out using the above globs would be faster/better
-					if( /jquery\.mobile/.test( filename )){
-						newFilename = pathless;
-						grunt.file.copy( filename, output + newFilename );
-					} else {
-						newFilename = "jquery.mobile." + pathless.split("/").join(".");
-						grunt.file.copy( filename, output + newFilename );
+					if( pluginConfig.exclude.test(filename) ) {
+						return;
 					}
 
-					manifest = "dist." + newFilename.replace( ".js", ".json" );
-					template = grunt.file.read( global_config.plugins.template );
+					var data = fs.readFileSync( filename, 'utf8' ),
+						tree = parse.findDependencies( filename, data ),
+						manifest, template;
+
+					template = grunt.file.read( pluginConfig.template );
+
+					manifest = filenameToPlugin( filename );
+
 					grunt.file.write( manifest, grunt.template.process( template, {
-						name: "foo",
-						title: "bar",
-						desc: "baz",
-						version: global_config.ver.official,
-						dependencies: ""
+						name: filename.replace(".json", ""),
+						title: "TODO",
+						desc: "TODO",
+						version: globalConfig.ver.official
 					}));
 				});
 			});
