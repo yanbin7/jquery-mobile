@@ -107,7 +107,7 @@ define( [ "jquery",
 			var ui = {
 					screen: $( "<div class='ui-screen-hidden ui-popup-screen fade'></div>" ),
 					placeholder: $( "<div style='display: none;'><!-- placeholder --></div>" ),
-					container: $( "<div class='ui-popup-container ui-selectmenu-hidden'></div>" )
+					container: this.element
 				},
 				thisPage = this.element.closest( ".ui-page" ),
 				myId = this.element.attr( "id" ),
@@ -124,13 +124,11 @@ define( [ "jquery",
 			ui.placeholder.insertAfter( this.element );
 			if ( myId ) {
 				ui.screen.attr( "id", myId + "-screen" );
-				ui.container.attr( "id", myId + "-popup" );
 				ui.placeholder.html( "<!-- placeholder for " + myId + " -->" );
 			}
-			ui.container.append( this.element );
 			
 			// Add class to popup element 
-			this.element.addClass( "ui-popup" );
+			this.element.addClass( "ui-popup ui-selectmenu-hidden" );
 
 			// Define instance variables
 			$.extend( this, {
@@ -545,12 +543,11 @@ define( [ "jquery",
 		},
 
 		_destroy: function() {
-			// Put the element back to where the placeholder was and remove the "ui-popup" class
+			// Put the element back to where the placeholder was and remove the popup-related classes
 			this.element
 				.insertAfter( this._ui.placeholder )
-				.removeClass( "ui-popup" );
+				.removeClass( "ui-popup ui-selectmenu-hidden" );
 			this._ui.screen.remove();
-			this._ui.container.remove();
 			this._ui.placeholder.remove();
 
 			// Unbind handlers that were bound to elements outside this.element (the window, in this case)
