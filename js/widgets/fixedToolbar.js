@@ -106,6 +106,65 @@ define( [ "jquery", "../jquery.mobile.widget", "../jquery.mobile.core", "../jque
 			}
 		},
 
+		_handlePageBeforeShow: function() {
+			if ( this.options.disablePageZoom ) {
+				$.mobile.zoom.disable( true );
+			}
+			if ( !this.options.visibleOnPageShow ) {
+				this.hide( true );
+			}
+		},
+
+		_handleAnimationStart: function() {
+			var thisPage = this.element.closest( ".ui-page" );
+
+			if ( o.updatePagePadding ) {
+				this.updatePagePadding( thisPage );
+			}
+		},
+
+		_handlePageShow: function() {
+			var self = this,
+				thisPage = this.element.closest( ".ui-page" );
+
+			this.updatePagePadding( thisPage );
+			if ( this.options.updatePagePadding ) {
+				this._on( window, {
+					throttledresize: function() {
+						self.updatePagePadding( thisPage );
+					}
+				});
+			}
+		},
+
+		_handlePageBeforeHide: function( e, ui ) {
+			var thisPage = this.element.closest( ".ui-page" );
+			if ( this.options.disablePageZoom ) {
+				$.mobile.zoom.enable( true );
+			}
+			if ( this.options.updatePagePadding ) {
+				this._off( $( window ), "throttledresize" );
+			}
+
+			if ( this.options.trackPersistentToolbars ) {
+				var thisFooter = $( ".ui-footer-fixed:jqmData(id)", thisPage ),
+					thisHeader = $( ".ui-header-fixed:jqmData(id)", thisPage ),
+					nextFooter = thisFooter.length && ui.nextPage && $( ".ui-footer-fixed:jqmData(id='" + thisFooter.jqmData( "id" ) + "')", ui.nextPage ),
+					nextHeader = thisHeader.length && ui.nextPage && $( ".ui-header-fixed:jqmData(id='" + thisHeader.jqmData( "id" ) + "')", ui.nextPage );
+
+				nextFooter = nextFooter || $();
+
+					if ( nextFooter.length || nextHeader.length ) {
+
+						nextFooter.add( nextHeader ).appendTo( $.mobile.pageContainer );
+
+						ui.nextPage.one( "pageshow", function() {
+							nextFooter.add( nextHeader ).appendTo( this );
+						});
+					}
+			}
+		},
+
 		_bindPageEvents: function() {
 			var self = this,
 				o = self.options,
@@ -114,56 +173,12 @@ define( [ "jquery", "../jquery.mobile.widget", "../jquery.mobile.core", "../jque
 			//page event bindings
 			// Fixed toolbars require page zoom to be disabled, otherwise usability issues crop up
 			// This method is meant to disable zoom while a fixed-positioned toolbar page is visible
-			$el.closest( ".ui-page" )
-				.bind( "pagebeforeshow", function() {
-					if ( o.disablePageZoom ) {
-						$.mobile.zoom.disable( true );
-					}
-					if ( !o.visibleOnPageShow ) {
-						self.hide( true );
-					}
-				} )
-				.bind( "webkitAnimationStart animationstart updatelayout", function() {
-					var thisPage = this;
-					if ( o.updatePagePadding ) {
-						self.updatePagePadding( thisPage );
-					}
-				})
-				.bind( "pageshow", function() {
-					var thisPage = this;
-					self.updatePagePadding( thisPage );
-					if ( o.updatePagePadding ) {
-						$( window ).bind( "throttledresize." + self.widgetName, function() {
-							self.updatePagePadding( thisPage );
-						});
-					}
-				})
-				.bind( "pagebeforehide", function( e, ui ) {
-					if ( o.disablePageZoom ) {
-						$.mobile.zoom.enable( true );
-					}
-					if ( o.updatePagePadding ) {
-						$( window ).unbind( "throttledresize." + self.widgetName );
-					}
-
-					if ( o.trackPersistentToolbars ) {
-						var thisFooter = $( ".ui-footer-fixed:jqmData(id)", this ),
-							thisHeader = $( ".ui-header-fixed:jqmData(id)", this ),
-							nextFooter = thisFooter.length && ui.nextPage && $( ".ui-footer-fixed:jqmData(id='" + thisFooter.jqmData( "id" ) + "')", ui.nextPage ),
-							nextHeader = thisHeader.length && ui.nextPage && $( ".ui-header-fixed:jqmData(id='" + thisHeader.jqmData( "id" ) + "')", ui.nextPage );
-
-						nextFooter = nextFooter || $();
-
-							if ( nextFooter.length || nextHeader.length ) {
-
-								nextFooter.add( nextHeader ).appendTo( $.mobile.pageContainer );
-
-								ui.nextPage.one( "pageshow", function() {
-									nextFooter.add( nextHeader ).appendTo( this );
-								});
-							}
-					}
-				});
+			this._on( this.element.closest( ".ui-page" ), {
+				"pagebeforeshow": "_handlePageBeforeShow",
+				"webkitAnimationStart animationstart updatelayout": "_handleAnimationStart",
+				"pageshow": "_handlePageShow",
+				"pagebeforehide": "_handlePageBeforeHide"
+			});
 		},
 
 		_visible: true,
