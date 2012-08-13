@@ -654,6 +654,7 @@ define( [ "jquery",
 					if ( $.mobile.urlHistory.activeIndex === 0 && dstHash === $.mobile.urlHistory.initialDst ) {
 						dstHash += $.mobile.dialogHashKey;
 					}
+					this._lastScroll = windowCoords();
 					$.mobile.urlHistory.ignoreNextHashChange = currentIsDialog;
 					$.mobile.urlHistory.addNew( dstHash, dstTransition, activeEntry.title, activeEntry.pageUrl, activeEntry.role );
 					$.mobile.path.set( dstHash );
@@ -714,6 +715,7 @@ define( [ "jquery",
 		},
 
 		_onHashChange: function( immediate ) {
+			var self = this;
 			this._abort = immediate;
 
 			if ( this._currentlyOpenPopup ) {
@@ -727,6 +729,9 @@ define( [ "jquery",
 					this._currentlyOpenPopup._immediate();
 				}
 			}
+			setTimeout( function() {
+				window.scrollTo( self._lastScroll.x, self._lastScroll.y );
+			}, 200 );
 		}
 	};
 
