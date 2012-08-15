@@ -118,7 +118,7 @@ define( [ "jquery",
 
 		_create: function() {
 			var ui = {
-					screen: $( "<div class='ui-screen-hidden ui-popup-screen fade'></div>" ),
+					screen: $.mobile.popup._screen.jqmData( "refcount", ( $.mobile.popup._screen.jqmData( "refcount" ) || 0 ) + 1 ),
 					placeholder: $( "<div style='display: none;'><!-- placeholder --></div>" ),
 					container: $( "<div class='ui-popup-container ui-selectmenu-hidden'></div>" )
 				},
@@ -131,12 +131,10 @@ define( [ "jquery",
 			}
 
 			// Apply the proto
-			thisPage.append( ui.screen );
-			ui.container.insertAfter( ui.screen );
+			thisPage.append( ui.container );
 			// Leave a placeholder where the element used to be
 			ui.placeholder.insertAfter( this.element );
 			if ( myId ) {
-				ui.screen.attr( "id", myId + "-screen" );
 				ui.container.attr( "id", myId + "-popup" );
 				ui.placeholder.html( "<!-- placeholder for " + myId + " -->" );
 			}
@@ -175,8 +173,6 @@ define( [ "jquery",
 				self._setOption( key, value, true );
 			});
 
-			ui.screen.bind( "vclick", $.proxy( this, "_eatEventAndClose" ) );
-
 			$.each( this._globalHandlers, function( idx, value ) {
 				value.src.bind( value.handler );
 			});
@@ -212,7 +208,7 @@ define( [ "jquery",
 			this._applyTheme( this.element, value, "body" );
 		},
 
-		_setOverlayTheme: function( value ) {
+		_updateScreen: function( value ) {
 			this._applyTheme( this._ui.screen, value, "overlay" );
 
 			if ( $.mobile.browser.ie ) {
@@ -222,8 +218,11 @@ define( [ "jquery",
 						this._ui.screen.css( "background-image" ) === "none" &&
 						this._ui.screen.css( "background" ) === undefined ) );
 			}
+		},
 
+		_setOverlayTheme: function( value ) {
 			if ( this._isOpen ) {
+				this._updateScreen( value );
 				this._ui.screen.addClass( "in" );
 			}
 		},
@@ -509,6 +508,11 @@ define( [ "jquery",
 				this._setTheme( this._page.jqmData( "theme" ) || $.mobile.getInheritedTheme( this._page, "c" ) );
 			}
 
+			this._ui.screen
+				.appendTo( this._page )
+				.one( "vclick", $.proxy( this, "_eatEventAndClose" ) );
+			this._updateScreen( this.options.overlayTheme );
+
 			this._ui.screen.removeClass( "ui-screen-hidden" );
 
 			this._ui.container
@@ -568,12 +572,16 @@ define( [ "jquery",
 		},
 
 		_destroy: function() {
+			var screenRefCount = Math.max( 0, ( this._ui.screen.jqmData( "refcount" ) || 0 ) - 1 );
 			// Put the element back to where the placeholder was and remove the "ui-popup" class
 			this._setTheme( "none" );
 			this.element
 				.insertAfter( this._ui.placeholder )
 				.removeClass( "ui-popup ui-overlay-shadow ui-corner-all" );
-			this._ui.screen.remove();
+			this._ui.screen.jqmData( "refcount", screenRefCount );
+			if ( 0 === screenRefCount ) {
+				this._ui.screen.remove();
+			}
 			this._ui.container.remove();
 			this._ui.placeholder.remove();
 
@@ -729,6 +737,8 @@ define( [ "jquery",
 			}
 		}
 	};
+
+	$.mobile.popup._screen = $( "<div class='ui-screen-hidden ui-popup-screen fade'></div>" );
 
 	$.mobile.popup.handleLink = function( $link ) {
 		var closestPage = $link.closest( ":jqmData(role='page')" ),
