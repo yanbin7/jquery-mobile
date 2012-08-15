@@ -549,7 +549,7 @@ define( [ "jquery",
 		},
 
 		_close: function() {
-			this._off( this._ui.screen, { "vclick": "_eatEventAndClose" } );
+			this._off( this._ui.screen, "vclick" );
 			this._ui.container.removeClass( "ui-popup-active" );
 			this._isOpen = false;
 
