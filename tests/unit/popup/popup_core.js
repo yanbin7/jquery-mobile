@@ -109,15 +109,13 @@
 	});
 
 	function popupEnhancementTests( $sel, prefix ) {
-		var $container = $sel.parent(), $screen = $sel.parent().prev();
+		var $container = $sel.parent();
 
 		ok( $sel.data( "popup" ),  prefix + ", popup div is associated with a popup widget" );
 		ok( $sel.hasClass( "ui-popup" ),  prefix + ", popup payload has class 'ui-popup'" );
 		ok( $container.hasClass( "ui-popup-container" ), prefix + ", popup div parent has class ui-popup-container" );
 		ok( $container.parent().hasClass( "ui-page" ), prefix + ", popup container parent is the page" );
-		ok( $screen.hasClass( "ui-popup-screen" ), prefix + ", popup div is preceded by its screen" );
 		ok( $container.attr( "id" ) === $sel.attr( "id" ) + "-popup", prefix + ", popup container has the id of the payload + '-popup'" );
-		ok( $screen.attr( "id" ) === $sel.attr( "id" ) + "-screen", prefix + ", popup screen has the id of the payload + '-screen'" );
 	}
 
 	function tolTest( el, popup, val, expected ) {
@@ -185,12 +183,12 @@
 			ok( $( "#test-popup" ).attr( "class" ).match( /( |^)ui-body-[a-z]( |$)/ ), "Open popup has a valid overlay theme" );
 			ok( theOffset.left >= 15 && theOffset.top >= 30, "Open popup top left coord is at least (10, 30)" );
 			$( "#test-popup" ).popup( "option", "overlayTheme", "a" );
-			ok( $( "#test-popup" ).parent().prev().hasClass( "ui-overlay-a in" ), "Setting an overlay theme while the popup is open causes the theme to be applied and the screen to be faded in" );
+			ok( $( ".ui-popup-screen" ).hasClass( "ui-overlay-a in" ), "Setting an overlay theme while the popup is open causes the theme to be applied and the screen to be faded in" );
 			ok( $( "#test-popup" ).parent().hasClass( "ui-popup-active" ), "Open popup has the 'ui-popup-active' class" );
 			$( "#test-popup" ).popup( "close" );
 			setTimeout(function() {
 				ok( !$( "#test-popup" ).parent().hasClass( "in" ), "Closed popup container does not have class 'in'" );
-				ok( $( "#test-popup" ).parent().prev().hasClass( "ui-screen-hidden" ), "Closed popup screen is hidden" );
+				ok( $( ".ui-popup-screen" ).hasClass( "ui-screen-hidden" ), "Closed popup screen is hidden" );
 				ok( !$( "#test-popup" ).parent().hasClass( "ui-popup-active" ), "Open popup dos not have the 'ui-popup-active' class" );
 				setTimeout( function() { start(); }, 300 );
 			}, 1000);
@@ -476,6 +474,12 @@
 				setTimeout( function() { start(); }, 300 );
 			}
 		]);
+	});
+
+	// The following test must be the last one because it removes all popups from the page
+	test( "Screen is gone after all popups are gone", function() {
+		$( ":jqmData(role='popup')" ).remove();
+		ok( $( ".ui-popup-screen" ).length === 0, "After removing all popups, the screen is gone too" );
 	});
 
 })( jQuery );
