@@ -510,7 +510,7 @@ define( [ "jquery",
 
 			this._ui.screen
 				.appendTo( this._page )
-				.one( "vclick", $.proxy( this, "_eatEventAndClose" ) );
+			this._on( this._ui.screen, { "vclick": "_eatEventAndClose" } );
 			this._updateScreen( this.options.overlayTheme );
 
 			this._ui.screen.removeClass( "ui-screen-hidden" );
@@ -549,6 +549,7 @@ define( [ "jquery",
 		},
 
 		_close: function() {
+			this._off( this._ui.screen, { "vclick": "_eatEventAndClose" } );
 			this._ui.container.removeClass( "ui-popup-active" );
 			this._isOpen = false;
 
