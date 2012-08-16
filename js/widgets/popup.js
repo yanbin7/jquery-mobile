@@ -509,7 +509,7 @@ define( [ "jquery",
 			}
 
 			this._ui.screen
-				.appendTo( this._page )
+				.appendTo( this._page );
 			this._on( this._ui.screen, { "vclick": "_eatEventAndClose" } );
 			this._updateScreen( this.options.overlayTheme );
 
