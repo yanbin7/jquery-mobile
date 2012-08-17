@@ -10,7 +10,14 @@
 	<script src="../../../js/jquery.js"></script>
 	<script src="../../../docs/_assets/js/jqm-docs.js"></script>
 	<script src="../../../js/"></script>
-	
+	<script src="/nix/php-console/console.php"></script>
+	<script>
+	( function( $, undefined ) {
+		$( document ).bind( "pagecreate", function( e ) {
+			console.log( navigator.userAgent );
+		});
+	})( jQuery );
+	</script>
 </head>
 <body>
 

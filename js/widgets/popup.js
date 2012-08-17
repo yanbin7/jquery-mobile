@@ -626,6 +626,10 @@ define( [ "jquery",
 			}
 		},
 
+		_useHash: function() {
+			return ( $.mobile.hashListeningEnabled && ( navigator.userAgent.indexOf( "IEMobile" ) === -1 ) );
+		},
+
 		// Call _onHashChange if the hash changes /after/ the popup is on the screen
 		// Note that placing the popup on the screen can itself cause a hashchange,
 		// because the dialogHashKey may need to be added to the URL.
@@ -640,7 +644,7 @@ define( [ "jquery",
 
 			self._myUrl = $.mobile.activePage.jqmData( "url" );
 			$.mobile.pageContainer.one( "pagebeforechange.popup", $.proxy( this, "_handlePageBeforeChange" ) );
-			if ( $.mobile.hashListeningEnabled ) {
+			if ( this._useHash() ) {
 				var activeEntry = $.mobile.urlHistory.getActive(),
 					dstTransition,
 					currentIsDialog = $.mobile.activePage.is( ".ui-dialog" ),
@@ -676,7 +680,7 @@ define( [ "jquery",
 				$( window ).unbind( "navigate.popupBinder navigate.popup" );
 			}
 
-			if ( $.mobile.hashListeningEnabled && !abort ) {
+			if ( this._useHash() && !abort ) {
 				window.history.back();
 			}
 			else {
