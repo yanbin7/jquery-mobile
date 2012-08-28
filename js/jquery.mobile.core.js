@@ -241,6 +241,7 @@ define( [ "jquery", "text!../version.txt" ], function( $, __version__ ) {
 	// ensures all data is set and retrieved using jQuery Mobile's data namespace
 	$.fn.jqmData = function( prop, value ) {
 		var result;
+		
 		if ( typeof prop !== "undefined" ) {
 			if ( prop ) {
 				prop = $.mobile.nsNormalize( prop );
@@ -253,7 +254,17 @@ define( [ "jquery", "text!../version.txt" ], function( $, __version__ ) {
 			} else {
 				result = this.data( prop, value );
 			}
+		} else {
+			var data = this.data(), newProp;
+
+			result = {};
+
+			for( nsprop in data ){
+				newProp = nsprop.replace($.mobile.ns.replace("-", ""), "").toLowerCase();
+				result[ newProp ] = data[ nsprop ];
+			}
 		}
+
 		return result;
 	};
 

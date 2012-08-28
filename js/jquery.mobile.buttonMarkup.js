@@ -20,16 +20,16 @@ $.fn.buttonMarkup = function( options ) {
 	options = ( options && ( $.type( options ) === "object" ) )? options : {};
 	for ( var i = 0; i < $workingSet.length; i++ ) {
 		var el = $workingSet.eq( i ),
-			e = el[ 0 ],
+			e = el[ 0 ], data = el.jqmData(),
 			o = $.extend( {}, $.fn.buttonMarkup.defaults, {
-				icon:       options.icon       !== undefined ? options.icon       : el.jqmData( "icon" ),
-				iconpos:    options.iconpos    !== undefined ? options.iconpos    : el.jqmData( "iconpos" ),
-				theme:      options.theme      !== undefined ? options.theme      : el.jqmData( "theme" ) || $.mobile.getInheritedTheme( el, "c" ),
-				inline:     options.inline     !== undefined ? options.inline     : el.jqmData( "inline" ),
-				shadow:     options.shadow     !== undefined ? options.shadow     : el.jqmData( "shadow" ),
-				corners:    options.corners    !== undefined ? options.corners    : el.jqmData( "corners" ),
-				iconshadow: options.iconshadow !== undefined ? options.iconshadow : el.jqmData( "iconshadow" ),
-				mini:       options.mini       !== undefined ? options.mini       : el.jqmData( "mini" )
+				icon:       options.icon       !== undefined ? options.icon       : data.icon,
+				iconpos:    options.iconpos    !== undefined ? options.iconpos    : data.iconpos,
+				theme:      options.theme      !== undefined ? options.theme      : data.theme || $.mobile.getInheritedTheme( el, "c" ),
+				inline:     options.inline     !== undefined ? options.inline     : data.inline,
+				shadow:     options.shadow     !== undefined ? options.shadow     : data.shadow,
+				corners:    options.corners    !== undefined ? options.corners    : data.corners,
+				iconshadow: options.iconshadow !== undefined ? options.iconshadow : data.iconshadow,
+				mini:       options.mini       !== undefined ? options.mini       : data.mini
 			}, options ),
 
 			// Classes Defined
