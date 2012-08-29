@@ -10,14 +10,11 @@ define( [ "jquery", "./jquery.mobile.core", "./jquery.mobile.vmouse" ], function
 (function( $, undefined ) {
 
 $.fn.buttonMarkup = function( options ) {
-	var $workingSet = this,
-		mapToDataAttr = function( key, value ) {
-			e.setAttribute( "data-" + $.mobile.ns + key, value );
-			el.jqmData( key, value );
-		};
+	var $workingSet = this;
 
 	// Enforce options to be of type string
 	options = ( options && ( $.type( options ) === "object" ) )? options : {};
+
 	for ( var i = 0; i < $workingSet.length; i++ ) {
 		var el = $workingSet.eq( i ),
 			e = el[ 0 ], data = el.jqmData(),
@@ -42,7 +39,10 @@ $.fn.buttonMarkup = function( options ) {
 			buttonIcon,
 			buttonElements;
 
-		$.each( o, mapToDataAttr );
+		$.each( o, function( key, value ) {
+			e.setAttribute( "data-" + $.mobile.ns + key, value );
+			$.jqmData( e, key, value );
+		});
 
 		if ( el.jqmData( "rel" ) === "popup" && el.attr( "href" ) ) {
 			e.setAttribute( "aria-haspopup", true );
@@ -60,11 +60,11 @@ $.fn.buttonMarkup = function( options ) {
 			// We will recreate this icon below
 			$( buttonElements.icon ).remove();
 			buttonElements.icon = null;
-		}
-		else {
+		} else {
 			buttonInner = document.createElement( o.wrapperEls );
 			buttonText = document.createElement( o.wrapperEls );
 		}
+
 		buttonIcon = o.icon ? document.createElement( "span" ) : null;
 
 		if ( attachEvents && !buttonElements ) {
