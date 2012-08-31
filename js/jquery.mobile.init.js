@@ -44,7 +44,10 @@ define( [ "jquery", "./jquery.mobile.core", "./jquery.mobile.support", "./jquery
 		// find and enhance the pages in the dom and transition to the first page.
 		initializePage: function() {
 			// find present pages
-			var $pages = $( ":jqmData(role='page'), :jqmData(role='dialog')" );
+			var $pages = $( ":jqmData(role='page'), :jqmData(role='dialog')" ),
+				escapeHash = function( hash ) {
+					return hash.replace(/([\\&=])/g, "\\$1");
+				};
 
 			// if no pages are found, create one with body's inner html
 			if ( !$pages.length ) {
@@ -81,9 +84,10 @@ define( [ "jquery", "./jquery.mobile.core", "./jquery.mobile.support", "./jquery
 			// the hash is not valid (contains more than one # or does not start with #)
 			// or there is no page with that hash, change to the first page in the DOM
 			// Remember, however, that the hash can also be a path!
+
 			if ( ! ( $.mobile.hashListeningEnabled &&
 				$.mobile.path.isHashValid( location.hash ) &&
-				( $( location.hash + ':jqmData(role="page")' ).length ||
+				( $( escapeHash( location.hash ) + ':jqmData(role="page")' ).length ||
 					$.mobile.path.isPath( location.hash ) ) ) ) {
 
 				// Store the initial destination
