@@ -16,6 +16,9 @@
 .ui-popup-screen.ui-screen-fixed {
 	position: fixed;
 }
+.ui-popup-open .ui-screen-fixed {
+	position: absolute;
+}
 .ui-popup-screen.in {
 	opacity: 0.5;
 	filter: Alpha(Opacity=50);
