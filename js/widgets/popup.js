@@ -153,7 +153,7 @@ define( [ "jquery",
 			// We need to adjust the history option to be false if there's no AJAX nav.
 			// We can't do it in the option declarations because those are run before
 			// it is determined whether there shall be AJAX nav.
-			this.options.history = this.options.history && $.mobile.ajaxEnabled; 
+			this.options.history = this.options.history && $.mobile.ajaxEnabled;
 
 			if ( thisPage.length === 0 ) {
 				thisPage = $( "body" );
@@ -731,7 +731,9 @@ define( [ "jquery",
 
 			// if the current url has no dialog hash key proceed as normal
 			// otherwise, if the page is a dialog simply tack on the hash key
-			if ( url.indexOf( hashkey ) === -1 && !activePage.is( ".ui-dialog" ) ){
+			if ( url.indexOf( hashkey ) === -1
+					 && !activePage.is( ".ui-dialog" )
+					 && $.mobile.urlHistory.activeIndex !== 0 ){
 				url = url + hashkey;
 			} else {
 				url = $.mobile.path.parseLocation().hash + hashkey;
