@@ -1,0 +1,69 @@
+.overflowMenu {
+	height: 100%;
+	width: 563px;
+	border-image: url('images_bb/core_crosscutmenu_bg.png') 1 1 1 15 fill / 0 0 0 0 repeat;
+	-webkit-box-shadow: -10px 0px 25px #121212;
+	-webkit-transition-duration: 0.25s;
+	-webkit-animation-timing-function: ease-out;
+	position: fixed;
+	top: 0px;
+	bottom: 0px;
+	overflow-x: hidden;
+	overflow-y: scroll;
+	display: -webkit-box;
+	-webkit-box-orient: vertical;
+	-webkit-box-pack: center;
+	-webkit-transform: translate3d(0,0,0);
+}
+.right {
+	right: -583px;
+}
+.over {
+	z-index: 10001;
+}
+
+.over.left {
+	left: -630px;
+}
+
+.push {
+	-webkit-transition-duration: 0.25s;
+	-webkit-animation-timing-function: ease-out;
+	z-index: 0;
+}
+
+.push.right {
+	right: 0;
+	width: 630px;
+}
+
+.left {
+	right: auto;
+	width: 630px;
+}
+
+.showTabHelper {
+	-webkit-transition-duration: 0.25s;
+	-webkit-animation-timing-function: ease-out;
+}
+
+.showTabOverflow,
+.ui-mobile [data-role="page"].showTabOverflow, .ui-page.showTabOverflow{
+	left: 613px !important;
+}
+.showTabOverflow.right,
+.ui-mobile [data-role="page"].showTabOverflow.right, .ui-page.showTabOverflow.right{
+	left: -613px !important;
+}
+
+.showMenu.right {
+	-webkit-transform:translate(-583px,0);
+}
+.showMenu.left {
+	-webkit-transform: translate(630px,0);
+}
+
+.hideMenu {
+	-webkit-transform:translate(0px,0);
+}
+

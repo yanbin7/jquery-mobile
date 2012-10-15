@@ -31,7 +31,8 @@ define([
 	'./widgets/fixedToolbar',
 	'./widgets/popup',
 	'./jquery.mobile.zoom',
-	'./jquery.mobile.zoom.iosorientationfix'
+	'./jquery.mobile.zoom.iosorientationfix',
+	'./widgets/overflow'
 ], function( require ) {
 	require( [ './jquery.mobile.init' ], function() {} );
 });
