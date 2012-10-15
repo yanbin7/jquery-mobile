@@ -1,6 +1,6 @@
 .overflowMenu {
 	height: 100%;
-	width: 563px;
+	width: 280px;
 	border-image: url('images_bb/core_crosscutmenu_bg.png') 1 1 1 15 fill / 0 0 0 0 repeat;
 	-webkit-box-shadow: -10px 0px 25px #121212;
 	-webkit-transition-duration: 0.25s;
@@ -16,14 +16,14 @@
 	-webkit-transform: translate3d(0,0,0);
 }
 .right {
-	right: -583px;
+	right: -280px;
 }
 .over {
 	z-index: 10001;
 }
 
 .over.left {
-	left: -630px;
+	left: -280px;
 }
 
 .push {
@@ -34,12 +34,10 @@
 
 .push.right {
 	right: 0;
-	width: 630px;
 }
 
 .left {
 	right: auto;
-	width: 630px;
 }
 
 .showTabHelper {
@@ -49,18 +47,18 @@
 
 .showTabOverflow,
 .ui-mobile [data-role="page"].showTabOverflow, .ui-page.showTabOverflow{
-	left: 613px !important;
+	left: 280px !important;
 }
 .showTabOverflow.right,
 .ui-mobile [data-role="page"].showTabOverflow.right, .ui-page.showTabOverflow.right{
-	left: -613px !important;
+	left: -280px !important;
 }
 
 .showMenu.right {
-	-webkit-transform:translate(-583px,0);
+	-webkit-transform:translate(-280px,0);
 }
 .showMenu.left {
-	-webkit-transform: translate(630px,0);
+	-webkit-transform: translate(280px,0);
 }
 
 .hideMenu {
