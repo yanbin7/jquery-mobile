@@ -23,16 +23,13 @@
 
 	<div data-role="content">
 		<button onclick="openLP()">Push Open Left</button>
-		<button onclick="closeLP()">Push Close Left</button>
 		<button onclick="openLO()">Over Open Left</button>
-		<button onclick="closeLO()">Over Close Left</button>
 		<button onclick="openRP()">Push Open Right</button>
-		<button onclick="closeRP()">Push Close Right</button>
 		<button onclick="openRO()">Over Open Right</button>
-		<button onclick="closeRO()">Over Close Right</button>
 	
 		<div id="lp" data-role="overflow" data-position="left" data-behavior="push">
 		
+			<button onclick="closeLP()">Push Close Left</button>
 			<div data-role="collapsible" data-collapsed="true" data-theme="b" data-content-theme="d">
 			
 				<h3>More in this section</h3>
@@ -50,12 +47,15 @@
 			</div>
 		</div>		
 		<div id="lo" data-role="overflow" data-position="left" data-behavior="over">
+			<button onclick="closeLO()">Over Close Left</button>
 			<img src="http://lorempixel.com/400/200/">
 		</div>
 		<div id="rp" data-role="overflow" data-position="right" data-behavior="push">
+			<button onclick="closeRP()">Push Close Right</button>
 			<img src="http://lorempixel.com/400/200/">
 		</div>
 		<div id="ro" data-role="overflow" data-position="right" data-behavior="over">
+			<button onclick="closeRO()">Over Close Right</button>
 			<img src="http://lorempixel.com/400/200/">
 		</div>
 
