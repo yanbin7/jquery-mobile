@@ -54,7 +54,7 @@
 		
 		<p>The above markup produces the following content layout:</p>
 		
-		<div class="ui-grid-a">
+		<div class="ui-grid-a ui-break">
 			<div class="ui-block-a"><strong>I'm Block A</strong> and text inside will wrap.</div>
 			<div class="ui-block-b"><strong>I'm Block B</strong> and text inside will wrap.</div>
 		</div><!-- /grid-a -->
@@ -70,7 +70,7 @@
 &lt;/fieldset&gt;
 </code></pre>
 	
-		<fieldset class="ui-grid-a">
+		<fieldset class="ui-grid-a ui-break">
 			<div class="ui-block-a"><button type="submit" data-theme="c">Cancel</button></div>
 			<div class="ui-block-b"><button type="submit" data-theme="b">Submit</button></div>	   
 		</fieldset>
@@ -87,7 +87,7 @@
 &lt;/div&gt;
 </code></pre>
 
-		<div class="ui-grid-a">
+		<div class="ui-grid-a ui-break">
 			<div class="ui-block-a"><button type="button" data-theme="c">Previous</button></div>
 			<div class="ui-block-b"><button type="button" data-theme="c">Next</button></div>	   
 		</div>
@@ -98,7 +98,7 @@
 	    
 		<p>Theme classes (not data-theme attributes) from the <a href="../api/themes.html">theming system</a> can be added to an element, including grids. On the blocks below, we're adding two classes: <code>ui-bar</code> to add the default bar padding and <code>ui-bar-e</code> to apply the background gradient and font styling for the "e" toolbar theme swatch. For illustration purposes, an inline <code>style="height:120px"</code> attribute is also added to each grid to set each to a standard height. </p>
 			
-		<div class="ui-grid-a">
+		<div class="ui-grid-a ui-break">
 			<div class="ui-block-a"><div class="ui-bar ui-bar-e" style="height:120px">Block A</div></div>
 			<div class="ui-block-b"><div class="ui-bar ui-bar-e" style="height:120px">Block B</div></div>
 		</div><!-- /grid-a -->
@@ -116,7 +116,7 @@
 		
 		<p>This will produce a 33/33/33% grid for our content.</p>
 			
-		<div class="ui-grid-b">
+		<div class="ui-grid-b ui-break">
 			<div class="ui-block-a"><div class="ui-bar ui-bar-e" style="height:120px">Block A</div></div>
 			<div class="ui-block-b"><div class="ui-bar ui-bar-e" style="height:120px">Block B</div></div>
 			<div class="ui-block-c"><div class="ui-bar ui-bar-e" style="height:120px">Block C</div></div>
@@ -124,7 +124,7 @@
 		
 		<p>And an example of a 3 column grid with buttons inside:</p>
 
-		<fieldset class="ui-grid-b">
+		<fieldset class="ui-grid-b ui-break">
 			<div class="ui-block-a"><button type="submit" data-theme="c">Hmm</button></div>
 			<div class="ui-block-b"><button type="submit" data-theme="a">No</button></div>	 
 			<div class="ui-block-c"><button type="submit" data-theme="b">Yes</button></div>  
@@ -134,7 +134,7 @@
 		
 		<p>A four-column, 25/25/25/25% grid is created by specifying <code>class=ui-grid-c</code> on the parent and adding a fourth block. Note: These blocks are also styled with theme classes so the grid layout is clearly visible.</p>
 			
-		<div class="ui-grid-c">
+		<div class="ui-grid-c ui-break">
 			<div class="ui-block-a"><div class="ui-bar ui-bar-e" style="height:120px">A</div></div>
 			<div class="ui-block-b"><div class="ui-bar ui-bar-e" style="height:120px">B</div></div>
 			<div class="ui-block-c"><div class="ui-bar ui-bar-e" style="height:120px">C</div></div>
@@ -144,7 +144,7 @@
 		<h2>Five-column grids</h2>
 		<p>A five-column, 20/20/20/20/20% grid is created by specifying <code>class=ui-grid-d</code> on the parent and adding a fifth block. Note: These blocks are also styled with theme classes so the grid layout is clearly visible.</p>
 			
-		<div class="ui-grid-d">
+		<div class="ui-grid-d ui-break">
 			<div class="ui-block-a"><div class="ui-bar ui-bar-e" style="height:120px">A</div></div>
 			<div class="ui-block-b"><div class="ui-bar ui-bar-e" style="height:120px">B</div></div>
 			<div class="ui-block-c"><div class="ui-bar ui-bar-e" style="height:120px">C</div></div>
@@ -156,7 +156,7 @@
 		
 		<p>Grids are designed to wrap to multiple rows of items. For example, if you specify a 3-column grid (ui-grid-b) on a container that has nine child blocks, it will wrap to 3 rows of 3 items each. There is a CSS rule to clear the floats and start a new line when the <code>class=ui-block-a</code> is seen so make sure to assign block classes in a repeating sequence (a, b, c, a, b, c, etc.) that maps to the grid type:</p>
 			
-		<div class="ui-grid-b">
+		<div class="ui-grid-b ui-break">
 			<div class="ui-block-a"><div class="ui-bar ui-bar-e" style="height:120px">A</div></div>
 			<div class="ui-block-b"><div class="ui-bar ui-bar-e" style="height:120px">B</div></div>
 			<div class="ui-block-c"><div class="ui-bar ui-bar-e" style="height:120px">C</div></div>
