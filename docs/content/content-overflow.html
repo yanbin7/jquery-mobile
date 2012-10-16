@@ -10,53 +10,196 @@
 	<script src="../../docs/_assets/js/jqm-docs.js"></script>
 	<script src="../../js/"></script>
 
+	<style>
+
+		.nav-search .ui-content {
+			margin-top:16px;
+		}
+		.nav-search .ui-corner-top {
+			-moz-border-radius: 0;
+			-webkit-border-radius: 0;
+			border-radius: 0;
+		}
+		.nav-search .ui-bar-a {
+			background-image:none;
+			background-color:#555;
+		}
+		.nav-search .ui-btn-up-a {
+			background-image:none;
+			background-color:#333333;
+		}
+		.nav-search .ui-btn-inner {
+			border-top: 1px solid #888;
+			border-color: rgba(255, 255, 255, .1);
+		}
+	</style>
 </head> 
 <body> 
 
+
 	<div data-role="page" class="type-interior">
 
-		<div data-role="header" data-theme="f">
+	<div data-role="header" data-theme="b">
 		<h1>Collapsible set</h1>
 		<a href="../../" data-icon="home" data-iconpos="notext" data-direction="reverse">Home</a>
-		<a href="../nav.html" data-icon="search" data-iconpos="notext" data-rel="dialog" data-transition="fade">Search</a>
 	</div><!-- /header -->
 
 	<div data-role="content">
-		<button onclick="openLP()">Push Open Left</button>
-		<button onclick="openLO()">Over Open Left</button>
-		<button onclick="openRP()">Push Open Right</button>
-		<button onclick="openRO()">Over Open Right</button>
+		<h3>Push panel</h3>
+		<button onclick="openLP()" data-inline="true" >Left</button>
+		<button onclick="openRP()" data-inline="true">Right</button>
+		<br />
+		<h3>Overlay panel</h3>
+		<button onclick="openLO()" data-inline="true">Left</button>
+		<button onclick="openRO()" data-inline="true">Right</button>
 	
 		<div id="lp" data-role="overflow" data-position="left" data-behavior="push">
-		
-			<button onclick="closeLP()">Push Close Left</button>
-			<div data-role="collapsible" data-collapsed="true" data-theme="b" data-content-theme="d">
-			
-				<h3>More in this section</h3>
-				
-				<ul data-role="listview" data-theme="c" data-dividertheme="d">
-				
-					<li data-role="list-divider">Content Formatting</li>
-					<li><a href="content-html.html">Basic HTML styles</a></li>
-					<li><a href="content-grids.html">Layout grids (columns)</a></li>
-					<li><a href="content-collapsible.html">Collapsible content blocks</a></li>
-					<li data-theme="a"><a href="content-collapsible-set.html">Collapsible sets (accordions)</a></li>
-					<li><a href="content-themes.html">Theming content</a></li>
-	
+
+			<ul data-role="listview" data-theme="a" data-divider-theme="a" style="margin-top:-2px;" class="nav-search">
+					<li data-icon="delete" style="background-color:#111;">
+						<a href="#" onclick="closeLP()">Close menu</a>
+					</li>
+					<li data-filtertext="wai-aria voiceover accessibility screen reader">
+						<a href="about/accessibility.html">Accessibility</a>
+					</li>
+					<li data-filtertext="accordions collapsible set collapsible-set collapsed">
+						<a href="content/content-collapsible-set.html">Accordions</a>
+					</li>
+					<li data-filtertext="ajax navigation model hashchange changePage pushstate replacestate history popstate rel=external ajaxEnabled changepage basetag data-url sub-hash subpageidentifier target Application Cache ajaxPrefilter responseText isLocal subPageUrlKey silentscroll page parameters router backbone">
+						<a href="pages/page-navmodel.html">Ajax navigation model</a>
+					</li>
+					<li data-filtertext="anatomy of page viewport meta tag disable enable zoom width=device-width, initial-scale=1 header content footer single multipage template boilerplate">
+						<a href="pages/page-anatomy.html">Anatomy of a page</a>
+					</li>
+					<li data-filtertext="events api animationComplete transition css">
+						<a href="api/events.html">Animation events</a>
+					</li>
+					<li data-filtertext="listview autodivider">
+						<a href="lists/lists-autodividers.html">Automatic listview dividers</a>
+					</li>
+					<li data-filtertext="button link submit cancel image reset mini buttonmarkup enable disable">
+						<a href="buttons/buttons-types.html">Buttons</a>
+					</li>
+					<li data-filtertext="button icon sprite png arrow delete plus minus check gear refresh forward back grid star alert info home search positioning iconpos top bottom left right notext custom disc white black">
+						<a href="buttons/buttons-icons.html">Button icons</a>
+					</li>
+					<li data-filtertext="data-prefetch loadpage domCache data-dom-cache size clear cleanup pagehide lazyload spinner loader">
+						<a href="pages/page-cache.html">Caching pages</a>
+					</li>
+					<li data-filtertext="input forms multi select checkbox checks grouped horizontal toggle legend">
+						<a href="forms/checkboxes/">Checkbox</a>
+					</li>
+					<li data-filtertext="button icon sprite png arrow delete plus minus check gear refresh forward back grid star alert info home search positioning iconpos top bottom left right notext custom disc white black">
+						<a href="buttons/buttons-icons.html">Button icons</a>
+					</li>
+					<li data-filtertext="data-prefetch loadpage domCache data-dom-cache size clear cleanup pagehide lazyload spinner loader">
+						<a href="pages/page-cache.html">Caching pages</a>
+					</li>
+					<li data-filtertext="input forms multi select checkbox checks grouped horizontal toggle legend">
+						<a href="forms/checkboxes/">Checkbox</a>
+					</li>
 				</ul>
-			</div>
+			
 		</div>		
-		<div id="lo" data-role="overflow" data-position="left" data-behavior="over">
-			<button onclick="closeLO()">Over Close Left</button>
-			<img src="http://lorempixel.com/400/200/">
+		<div id="lo" data-role="overflow" data-position="left" data-behavior="over" data-theme="a">
+			<ul data-role="listview" data-theme="d" data-divider-theme="c" style="margin-top:-2px; width:280px" class="nav-search">
+					<li data-icon="delete" data-theme="a">
+						<a href="#" onclick="closeLO()">Close menu</a>
+					</li>
+					<li data-filtertext="wai-aria voiceover accessibility screen reader">
+						<a href="about/accessibility.html">Accessibility</a>
+					</li>
+					<li data-filtertext="accordions collapsible set collapsible-set collapsed">
+						<a href="content/content-collapsible-set.html">Accordions</a>
+					</li>
+					<li data-filtertext="ajax navigation model hashchange changePage pushstate replacestate history popstate rel=external ajaxEnabled changepage basetag data-url sub-hash subpageidentifier target Application Cache ajaxPrefilter responseText isLocal subPageUrlKey silentscroll page parameters router backbone">
+						<a href="pages/page-navmodel.html">Ajax navigation model</a>
+					</li>
+					<li data-filtertext="anatomy of page viewport meta tag disable enable zoom width=device-width, initial-scale=1 header content footer single multipage template boilerplate">
+						<a href="pages/page-anatomy.html">Anatomy of a page</a>
+					</li>
+					<li data-filtertext="events api animationComplete transition css">
+						<a href="api/events.html">Animation events</a>
+					</li>
+					<li data-filtertext="listview autodivider">
+						<a href="lists/lists-autodividers.html">Automatic listview dividers</a>
+					</li>
+					<li data-filtertext="button link submit cancel image reset mini buttonmarkup enable disable">
+						<a href="buttons/buttons-types.html">Buttons</a>
+					</li>
+					<li data-filtertext="button icon sprite png arrow delete plus minus check gear refresh forward back grid star alert info home search positioning iconpos top bottom left right notext custom disc white black">
+						<a href="buttons/buttons-icons.html">Button icons</a>
+					</li>
+					<li data-filtertext="data-prefetch loadpage domCache data-dom-cache size clear cleanup pagehide lazyload spinner loader">
+						<a href="pages/page-cache.html">Caching pages</a>
+					</li>
+					<li data-filtertext="input forms multi select checkbox checks grouped horizontal toggle legend">
+						<a href="forms/checkboxes/">Checkbox</a>
+					</li>
+					<li data-filtertext="button icon sprite png arrow delete plus minus check gear refresh forward back grid star alert info home search positioning iconpos top bottom left right notext custom disc white black">
+						<a href="buttons/buttons-icons.html">Button icons</a>
+					</li>
+					<li data-filtertext="data-prefetch loadpage domCache data-dom-cache size clear cleanup pagehide lazyload spinner loader">
+						<a href="pages/page-cache.html">Caching pages</a>
+					</li>
+					<li data-filtertext="input forms multi select checkbox checks grouped horizontal toggle legend">
+						<a href="forms/checkboxes/">Checkbox</a>
+					</li>
+				</ul>
 		</div>
 		<div id="rp" data-role="overflow" data-position="right" data-behavior="push">
-			<button onclick="closeRP()">Push Close Right</button>
-			<img src="http://lorempixel.com/400/200/">
+			<ul data-role="listview" data-theme="a" data-divider-theme="a" style="margin-top:-2px;" class="nav-search">
+					<li data-icon="delete" style="background-color:#111;">
+						<a href="#" onclick="closeRP()">Close menu</a>
+					</li>
+					<li data-filtertext="wai-aria voiceover accessibility screen reader">
+						<a href="about/accessibility.html">Accessibility</a>
+					</li>
+					<li data-filtertext="accordions collapsible set collapsible-set collapsed">
+						<a href="content/content-collapsible-set.html">Accordions</a>
+					</li>
+					<li data-filtertext="ajax navigation model hashchange changePage pushstate replacestate history popstate rel=external ajaxEnabled changepage basetag data-url sub-hash subpageidentifier target Application Cache ajaxPrefilter responseText isLocal subPageUrlKey silentscroll page parameters router backbone">
+						<a href="pages/page-navmodel.html">Ajax navigation model</a>
+					</li>
+					<li data-filtertext="anatomy of page viewport meta tag disable enable zoom width=device-width, initial-scale=1 header content footer single multipage template boilerplate">
+						<a href="pages/page-anatomy.html">Anatomy of a page</a>
+					</li>
+					<li data-filtertext="events api animationComplete transition css">
+						<a href="api/events.html">Animation events</a>
+					</li>
+					<li data-filtertext="listview autodivider">
+						<a href="lists/lists-autodividers.html">Automatic listview dividers</a>
+					</li>
+					<li data-filtertext="button link submit cancel image reset mini buttonmarkup enable disable">
+						<a href="buttons/buttons-types.html">Buttons</a>
+					</li>
+					<li data-filtertext="button icon sprite png arrow delete plus minus check gear refresh forward back grid star alert info home search positioning iconpos top bottom left right notext custom disc white black">
+						<a href="buttons/buttons-icons.html">Button icons</a>
+					</li>
+					<li data-filtertext="data-prefetch loadpage domCache data-dom-cache size clear cleanup pagehide lazyload spinner loader">
+						<a href="pages/page-cache.html">Caching pages</a>
+					</li>
+					<li data-filtertext="input forms multi select checkbox checks grouped horizontal toggle legend">
+						<a href="forms/checkboxes/">Checkbox</a>
+					</li>
+					<li data-filtertext="button icon sprite png arrow delete plus minus check gear refresh forward back grid star alert info home search positioning iconpos top bottom left right notext custom disc white black">
+						<a href="buttons/buttons-icons.html">Button icons</a>
+					</li>
+					<li data-filtertext="data-prefetch loadpage domCache data-dom-cache size clear cleanup pagehide lazyload spinner loader">
+						<a href="pages/page-cache.html">Caching pages</a>
+					</li>
+					<li data-filtertext="input forms multi select checkbox checks grouped horizontal toggle legend">
+						<a href="forms/checkboxes/">Checkbox</a>
+					</li>
+				</ul>
 		</div>
-		<div id="ro" data-role="overflow" data-position="right" data-behavior="over">
-			<button onclick="closeRO()">Over Close Right</button>
-			<img src="http://lorempixel.com/400/200/">
+		<div id="ro" data-role="overflow" data-position="right" data-behavior="over" data-theme="d" style="margin-top:-1px;">
+			<ul data-role="listview" data-theme="c" data-divider-theme="c"  data-icon="delete" style="margin-top:-2px; width:280px" class="nav-search">
+					<li data-theme="a">
+						<a href="#" onclick="closeRO()">Close</a>
+					</li>
+			</ul>
+			<img src="http://lorempixel.com/400/800/" style="max-width:100%;">
 		</div>
 
 		<script type="text/javascript">
@@ -89,10 +232,7 @@
 		</script>
 </div><!-- /content -->
 
-<div data-role="footer" class="footer-docs" data-theme="c">
-		<p class="jqm-version"></p>
-		<p>&copy; 2012 jQuery Foundation and other contributors</p>
-</div>
+
 	
 </div><!-- /page -->
 

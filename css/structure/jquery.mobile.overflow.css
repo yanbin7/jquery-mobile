@@ -2,7 +2,7 @@
 	height: 100%;
 	width: 280px;
 	border-image: url('images_bb/core_crosscutmenu_bg.png') 1 1 1 15 fill / 0 0 0 0 repeat;
-	-webkit-box-shadow: -10px 0px 25px #121212;
+	-webkit-box-shadow: -12px 0px 25px rgba(0,0,0,.20);
 	-webkit-transition-duration: 0.25s;
 	-webkit-animation-timing-function: ease-out;
 	position: fixed;
@@ -10,20 +10,24 @@
 	bottom: 0px;
 	overflow-x: hidden;
 	overflow-y: scroll;
-	display: -webkit-box;
-	-webkit-box-orient: vertical;
-	-webkit-box-pack: center;
 	-webkit-transform: translate3d(0,0,0);
 }
 .right {
-	right: -280px;
+	right: -310px;
 }
 .over {
 	z-index: 10001;
 }
 
+.ui-content .over .ui-listview {
+margin:0;
+}
+
+
 .over.left {
-	left: -280px;
+	left: -300px;
+	-webkit-box-shadow: 12px 0px 25px rgba(0,0,0,.20);
+	
 }
 
 .push {
@@ -34,10 +38,12 @@
 
 .push.right {
 	right: 0;
+	width: 280px;
 }
 
 .left {
 	right: auto;
+	width: 280px;
 }
 
 .showTabHelper {
@@ -58,7 +64,7 @@
 	-webkit-transform:translate(-280px,0);
 }
 .showMenu.left {
-	-webkit-transform: translate(280px,0);
+	-webkit-transform: translate(300px,0);
 }
 
 .hideMenu {
