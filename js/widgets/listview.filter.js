@@ -95,7 +95,7 @@ $( document ).delegate( ":jqmData(role='listview')", "listviewcreate", function(
 
 						//mark to be hidden
 						item.toggleClass( "ui-filter-hidequeue" , true );
-					} else if(listItems[i].className.indexOf("ui-collapsible") == 0) {
+					} else if(listItems[i].className.indexOf("ui-collapsible") === 0) {
 					
 						// Collapsible list
 				            $(listItems[i].children[0].children).toggleClass("ui-filter-hidenqueue", true);
@@ -134,7 +134,7 @@ $( document ).delegate( ":jqmData(role='listview')", "listviewcreate", function(
 					.toggleClass( "ui-filter-hidequeue", false );
 				
 				  for ( var i = listItems.length - 1; i >= 0; i-- ) {
-				    if(listItems[i].className.indexOf("ui-collapsible")==0) {
+				    if(listItems[i].className.indexOf("ui-collapsible") === 0) {
 					listItemsCollapsible = $(listItems[i].children[1].children);
 					
 					// Show Collapsible items, not marked to be hidden
@@ -157,7 +157,7 @@ $( document ).delegate( ":jqmData(role='listview')", "listviewcreate", function(
 				listItems.toggleClass( "ui-screen-hidden", !!listview.options.filterReveal );
 				
 				for ( var i = listItems.length - 1; i >= 0; i-- ) {
-				    if(listItems[i].className.indexOf("ui-collapsible")==0) {
+				    if(listItems[i].className.indexOf("ui-collapsible") === 0) {
 					listItemsCollapsible = $(listItems[i].children[1].children);
 					listItemsCollapsible.toggleClass( "ui-screen-hidden", !!listview.options.filterReveal ); 
 					}
